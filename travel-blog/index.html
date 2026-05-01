@@ -1,0 +1,248 @@
+<!-- Travel Blog Homepage showing interactive navigation and nested lists -->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>The Home Page</title>
+
+    <!-- Styling for layout, navigation, and list appearance -->
+    <style>
+        /* Enable smooth scrolling when clicking links */
+        html {
+            scroll-behavior: smooth
+        }
+
+        /* General page styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+        }
+
+        /* Header styling */
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Center and limit page width */
+        main {
+            width: 65%;
+            margin: 20px auto;
+        }
+
+        /* Style section and spacing */
+        section {
+            margin: 60px auto;
+            padding-top: 20px;
+            border-top: 2px solid #ddd;
+            scroll-margin-top: 50px;
+        }
+
+        nav ul {
+        justify-content: center;
+        list-style: none;
+        display: flex;
+        gap: 15px;
+        }
+
+        /* Style navigation numbers as colored circular blocks */
+        nav a {
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        text-decoration: none;
+        color: white;
+        border-radius: 50%;
+        font-weight: bold;
+        transition: 0.3s;
+        }
+
+        nav li:nth-child(1) a {
+            background-color: tomato;
+        }
+
+        nav li:nth-child(2) a {
+            background-color: steelblue;
+        }
+
+        nav li:nth-child(3) a {
+            background-color: limegreen;
+        }
+
+        nav li:nth-child(4) a {
+            background-color: orange;
+        }
+
+        /* Add hover effect for interactivity */
+        nav a:hover {
+            transform: scale(1.1);
+        }
+
+        /* Styling the lists */
+        section h2 {
+            color: #000080;
+        }
+
+        ol > li {
+            color: #0018F9;
+            font-weight: bold;
+        }
+
+        ul li {
+            color: black;
+            font-weight: normal;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Website title -->
+    <header>
+        <h1>Travel Blog</h1>
+    </header>
+
+    <!-- Navigation with clickable number blocks linking to each continent section -->
+    <nav>
+        <ul>
+            <li><a href="#europe">1</a> </li>
+            <li><a href="#asia">2</a> </li>
+            <li><a href="#america">3</a> </li>
+            <li><a href="#africa">4</a> </li>
+        </ul>
+    </nav>
+
+    <main>
+        <!-- Europe section: displays countries (ordered list) and cities (unordered list) -->
+        <section id="europe">
+            <h2>Destination 1: Europe</h2>
+            <!-- Ordered list represents countries -->
+            <ol>
+                <li>France
+                    <!-- Unordered list represents cities inside each country -->
+                    <ul>
+                        <li>Paris</li>
+                        <li>Nice</li>
+                        <li>Marseille</li>
+                    </ul>
+                </li>
+
+                <li>Italy
+                    <ul>
+                        <li>Rome</li>
+                        <li>Florence</li>
+                        <li>Venice</li>
+                    </ul>
+                </li>
+
+                <li>Greece
+                    <ul>
+                        <li>Athens</li>
+                        <li>Thessaloniki</li>
+                        <li>Santorini</li>
+                    </ul>
+                </li>
+            </ol>
+        </section>
+
+
+        <!-- Asia section: displays countries (ordered list) and cities (unordered list) -->
+        <section id="asia">
+            <h2>Destination 2: Asia</h2>
+
+            <ol>
+                <li>Japan
+                    <ul>
+                        <li>Tokyo</li>
+                        <li>Kyoto</li>
+                        <li>Osaka</li>
+                    </ul>
+                </li>
+
+                <li>China
+                    <ul>
+                        <li>Beijing</li>
+                        <li>Shanghai</li>
+                        <li>Xi'an</li>
+                    </ul>
+                </li>
+
+                <li>India
+                    <ul>
+                        <li>New Delhi</li>
+                        <li>Mumbai</li>
+                        <li>Jaipur</li>
+                    </ul>
+                </li>
+            </ol>
+        </section>
+
+
+        <!-- America section: displays countries (ordered list) and cities (unordered list) -->
+        <section id="america">
+            <h2>Destination 3: America</h2>
+
+            <ol>
+                <li>USA
+                    <ul>
+                        <li>New York City</li>
+                        <li>Los Angeles</li>
+                        <li>Chicago</li>
+                    </ul>
+                </li>
+
+                <li>Brazil
+                    <ul>
+                        <li>Rio de Janeiro</li>
+                        <li>São Paulo</li>
+                        <li>Salvador</li>
+                    </ul>
+                </li>
+
+                <li>Canada
+                    <ul>
+                        <li>Toronto</li>
+                        <li>Vancouver</li>
+                        <li>Montreal</li>
+                    </ul>
+                </li>
+            </ol>
+        </section>
+
+
+        <!-- Africa section: displays countries (ordered list) and cities (unordered list) -->
+        <section id="africa">
+            <h2>Destination 4: Africa</h2>
+
+            <ol>
+                <li>South Africa
+                    <ul>
+                        <li>Cape Town</li>
+                        <li>Johannesburg</li>
+                        <li>Durban</li>
+                    </ul>
+                </li>
+
+                <li>Egypt
+                    <ul>
+                        <li>Cairo</li>
+                        <li>Luxor</li>
+                        <li>Sharm El Sheikh</li>
+                    </ul>
+                </li>
+
+                <li>Morocco
+                    <ul>
+                        <li>Marrakech</li>
+                        <li>Casablanca</li>
+                        <li>Fez</li>
+                    </ul>
+                </li>
+            </ol>
+        </section>
+    </main>
+</body>
+</html>

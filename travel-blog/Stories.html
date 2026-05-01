@@ -1,0 +1,183 @@
+<!-- Travel Stories Page showing destinations and attractions -->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Travel Stories</title>
+
+    <style>
+        /* Enable smooth scrolling when clicking links */
+        html {
+            scroll-behavior: smooth
+        }
+
+        /* General page styling (same as the homepage) */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+        }
+
+        /* Header styling (same as the homepage) */
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Center and limit page width */
+        main {
+            width: 65%;
+            margin: 20px auto;
+        }
+
+        /* Style section and spacing */
+        section {
+            margin: 60px auto;
+            padding-top: 20px;
+            border-top: 2px solid #ddd;
+            scroll-margin-top: 50px;
+        }
+
+        /* highlight section title when navigated to */
+        section:target h2 {
+            background-color: #4682B4;
+        }
+
+        /* Table styling */
+        table {
+            width: 80%;
+            margin:40px auto;
+            border-collapse: collapse;
+        }
+
+        /* Table border and spacing */
+        th, td {
+            border: 1.5px solid #4682B4;
+            padding: 10px;
+            text-align: center;
+        }
+
+        /* Table Header styling */
+        th {
+            background-color: #4682B4;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Alternative row color */
+        tr:nth-child(even) {
+            background-color: #D3D3D3;
+        }
+
+        /* Image styling */
+        img {
+            width: 100px;
+            cursor: pointer;
+        }
+
+        /* Hover effect on images */
+        img:hover {
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+    <!-- Website title -->
+    <header>
+        <h1>Travel Blog</h1>
+    </header>
+
+    <main>
+        <!-- Table of destinations and clickable attraction images -->
+        <section>
+            <h2>Travel Destinations</h2>
+
+            <table>
+                <!-- Table headers -->
+                <tr>
+                    <th>Destination</th>
+                    <th>Attraction</th>
+                </tr>
+
+                <!-- Paris destination with clickable Eiffel Tower image -->
+                <tr>
+                    <td>Paris</td>
+                    <td>
+                        <a href="#eiffel">
+                            <img src="images/Eiffel%20tower.jpg" alt="The Eiffel tower">
+                        </a>
+                    </td>
+                </tr>
+
+                <!-- Athens destination with clickable Parthenon image -->
+                <tr>
+                    <td>Athens</td>
+                    <td>
+                        <a href="#parthenon">
+                            <img src="images/The%20Parthenon.jpg" alt="The Parthenon">
+                        </a>
+                    </td>
+                </tr>
+
+                <!-- New York City destination with clickable Statue of Liberty image -->
+                <tr>
+                    <td>New York City</td>
+                    <td>
+                        <a href="#liberty">
+                            <img src="images/Statue%20of%20Liberty.jpg" alt="The Statue of Liberty">
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Section describing the Eiffel Tower -->
+        <section id="eiffel">
+            <h2>Paris – Eiffel Tower</h2>
+            <p>
+                The Eiffel Tower is located in the heart of Paris, France. It is one of the most iconic landmarks in
+                the world and offers amazing city views from the top.
+            </p>
+
+            <p>
+                ✨ Best for: sightseeing and photography<br>
+                ⏰ Best time: evening for sunset views<br>
+                📌 Tip: Visit at night to see the light show
+            </p>
+        </section>
+
+        <!-- Section describing the Parthenon -->
+        <section id="parthenon">
+            <h2>Athens – Parthenon</h2>
+            <p>
+                The Parthenon is an ancient temple located on the Acropolis hill in Athens, Greece. It is one of the
+                most important symbols of Ancient Greek civilization and architecture.
+            </p>
+
+            <p>
+                ✨ Best for: history lovers and photography<br>
+                ⏰ Best time: early morning or sunset to avoid crowds and heat<br>
+                📌 Tip: wear comfortable shoes—The walk up the acropolis involves stairs and uneven paths
+            </p>
+        </section>
+
+        <!-- Section describing the Statue of Liberty -->
+        <section id="liberty">
+            <h2>New York City – Statue of Liberty</h2>
+            <p>
+                The Statue of Liberty is a colossal neoclassical sculpture located on Liberty Island in New York Harbor,
+                United States. It was a gift from France and has become one of the most recognizable symbols of freedom
+                and democracy in the world.
+            </p>
+            <p>
+                ✨ Best for: history enthusiasts, cultural exploration, and iconic photography<br>
+                ⏰ Best time: early morning or late afternoon for fewer crowds and softer lighting<br>
+                📌 Tip: Book ferry tickets in advance and take time to explore nearby Ellis Island for
+                a deeper historical experience
+            </p>
+        </section>
+    </main>
+
+</body>
+</html>

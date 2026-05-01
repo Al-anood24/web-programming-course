@@ -1,0 +1,353 @@
+<!-- Contact form page with validation and preview functionality -->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Contact Form</title>
+
+    <style>
+        /* General page styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        /* Form container styling (centered box with shadow) */
+        form {
+            width: 400px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        /* Center form title */
+        legend {
+            text-align: center;
+        }
+
+        /* spacing between form fields */
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        /* Label styling */
+        label {
+            font-weight: bold;
+        }
+
+        /* Input, textarea, and select styling */
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 5px 0;
+            margin-top: 5px;
+            border: 1.5px solid #ccc;
+            border-radius: 4px;
+        }
+
+        /* Allow textarea to resize vertically only */
+        textarea {
+            resize: vertical;
+        }
+
+        /* Spacing for section titles like "Preferred Contact Method" */
+        .form-group p {
+            margin-bottom: 5px;
+        }
+
+        /* Fix radio button size and spacing */
+        .form-group input[type="radio"] {
+            width: auto;
+            margin-right: 5px;
+        }
+
+        /* Add spacing between radio labels */
+        .form-group label {
+            margin-right: 15px;
+        }
+
+        /* Button styling */
+        button {
+            padding: 10px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Submit button style */
+        button[type="submit"] {
+            background-color: #478fbc;
+            color: white;
+        }
+
+        /* Preview button style */
+        button[type="button"] {
+            background-color: #ADADAD;
+            color: black;
+        }
+
+        /*Button hover effect */
+        button:hover {
+            opacity: 0.9;
+        }
+
+        /* Preview box styling */
+        .preview {
+            width: 400px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        /* Error message styling */
+        .error {
+            display: block;
+            color: red;
+            font-size: 0.85em;
+        }
+
+        /* Red border for invalid inputs */
+        .error-border {
+            border: 2px solid red !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Contact form that sends data using POST method -->
+    <form id="contactForm" action="#" method="POST" novalidate>
+        <!-- Fieldset groups all form inputs for better structure -->
+        <fieldset>
+            <legend>
+                <h1>Contact Us</h1>
+            </legend>
+
+            <div class="form-group">
+                <!-- Input field for user's full name -->
+                <label for="name">Name:</label><br />
+                <input type="text" name="name" id="name" required>
+                <span class="error" id="nameError"></span>
+            </div>
+
+            <div class="form-group">
+                <!-- Email input with validation handled in JavaScript -->
+                <label for="email">Email:</label><br />
+                <input type="email" name="email" id="email" required>
+                <span class="error" id="emailError"></span>
+            </div>
+
+            <div class="form-group">
+                <!-- Phone input restricted to 10 digits -->
+                <label for="phone_number">Phone Number:</label><br />
+                <input type="tel" name="phone" id="phone_number" pattern="[0-9]{10}" required>
+                <span class="error" id="phoneError"></span>
+            </div>
+
+            <div class="form-group">
+                <!-- Text area for user's message -->
+                <label for="message">Message:</label><br />
+                <textarea id="message" name="message" rows="5" cols="20" required></textarea>
+                <span class="error" id="messageError"></span>
+            </div>
+
+            <div class="form-group">
+                <p>Preferred Contact Method:</p>
+
+                <div class="radio-group">
+                    <!-- Radio buttons allow user to select preferred contact method -->
+                    <input type="radio" name="method" id="method1" value="Email" required>
+                    <label for="method1">Email</label>
+
+                    <input type="radio" name="method" id="method2" value="Phone">
+                    <label for="method2">Phone</label>
+
+                    <input type="radio" name="method" id="method3" value="Both">
+                    <label for="method3">Both</label>
+
+                    <span class="error" id="methodError"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <!-- Dropdown menu for selecting inquiry type -->
+                <label for="inquiry">Inquiry Type:</label><br />
+                <select id="inquiry" name="inquiry" required>
+                    <option value="" disabled selected>Select an option</option>
+                    <option value="general">General Inquiry</option>
+                    <option value="support">Support Request</option>
+                    <option value="feedback">Feedback</option>
+                </select>
+                <span class="error" id="inquiryTypeError"></span>
+            </div>
+
+            <div class="form-group">
+                <!-- Button to preview entered data before submission -->
+                <button type="button" onclick="previewData()">Preview</button>
+                <!-- Submit button sends form data -->
+                <button type="submit" id="button">Submit</button>
+            </div>
+        </fieldset>
+    </form>
+    <!-- Hidden section that displays user input before submission -->
+    <div class="preview" id="preview" style="display: none">
+        <h3>Preview</h3>
+        <div id="previewContent"></div>
+    </div>
+    <script>
+        // Function to display user input before submitting the form
+        function previewData() {
+
+            // Prevent preview if validation fails
+            if (!validateForm()) {
+                return;
+            }
+
+            // Retrieve values entered by the user
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const phone = document.getElementById("phone_number").value;
+            const message = document.getElementById("message").value;
+
+            // Get selected radio button (contact method)
+            const method = document.querySelector('input[name="method"]:checked');
+
+            // Get selected dropdown text (not just value)
+            const inquirySelect = document.getElementById("inquiry");
+            const inquiryText = inquirySelect.options[inquirySelect.selectedIndex].text;
+
+           // Make preview section visible and scroll to it
+           document.getElementById("preview").style.display = "block";
+           document.getElementById("preview").scrollIntoView({behavior: "smooth" });
+
+           // Display user input dynamically in preview section
+           document.getElementById("previewContent").innerHTML = `
+                <p><strong>Name:</strong> ${name}</p>
+                <p><strong>Email:</strong> ${email}</p>
+                <p><strong>Phone:</strong> ${phone}</p>
+                <p><strong>Message:</strong> ${message}</p>
+                <p><strong>Contact Method:</strong> ${method ? method.value : "Not selected"}</p>
+                <p><strong>Inquiry Type:</strong> ${inquiryText}</p>
+           `;
+        }
+
+        // Function to validate all form inputs before submission
+        function validateForm() {
+
+            // Track overall form validity
+            let isValid = true;
+
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const phone = document.getElementById("phone_number").value.trim();
+            const message = document.getElementById("message").value.trim();
+            const method = document.querySelector('input[name="method"]:checked');
+            const inquiry = document.getElementById("inquiry").value;
+
+            const nameError = document.getElementById("nameError");
+            const emailError = document.getElementById("emailError");
+            const phoneError = document.getElementById("phoneError");
+            const messageError = document.getElementById("messageError");
+            const methodError = document.getElementById("methodError");
+            const inquiryError = document.getElementById("inquiryTypeError");
+
+            // Validate name field (must not be empty)
+            const nameInput = document.getElementById("name");
+
+            if (name === "") {
+                nameError.textContent = "Name is required.";
+                nameInput.classList.add("error-border");
+                isValid = false;
+            } else {
+                nameError.textContent = "";
+                nameInput.classList.remove("error-border");
+            }
+
+            // Validate email format using regular expression
+            const emailInput = document.getElementById("email");
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (email === "") {
+                emailError.textContent = "Email is required.";
+                emailInput.classList.add("error-border");
+                isValid = false;
+            } else if (!emailPattern.test(email)) {
+                emailError.textContent = "Invalid email format.";
+                emailInput.classList.add("error-border");
+                isValid = false;
+            } else {
+                emailError.textContent = "";
+                emailInput.classList.remove("error-border");
+            }
+
+            // Validate phone number (must be exactly 10 digits)
+            const phoneInput = document.getElementById("phone_number");
+
+            if (phone === "") {
+                phoneError.textContent = "Phone number is required.";
+                phoneInput.classList.add("error-border");
+                isValid = false;
+            } else if (!/^\d{10}$/.test(phone)) {
+                phoneError.textContent = "Phone must be 10 digits.";
+                phoneInput.classList.add("error-border");
+                isValid = false;
+            } else {
+                phoneError.textContent = "";
+                phoneInput.classList.remove("error-border");
+            }
+
+            // Validate message field
+            const messageInput = document.getElementById("message");
+
+            if (message === "") {
+                messageError.textContent = "Message is required.";
+                messageInput.classList.add("error-border");
+                isValid = false;
+            } else {
+                messageError.textContent = "";
+                messageInput.classList.remove("error-border");
+            }
+
+
+            // Validate radio button selection
+            if (!method) {
+                methodError.textContent = "Please select a contact method.";
+                isValid = false;
+            } else {
+                methodError.textContent = "";
+            }
+
+            // Validate dropdown selection
+            const inquiryInput = document.getElementById("inquiry");
+
+            if (inquiry === "") {
+                inquiryError.textContent = "Please select an inquiry type.";
+                inquiryInput.classList.add("error-border");
+                isValid = false;
+            } else {
+                inquiryError.textContent = "";
+                inquiryInput.classList.remove("error-border");
+            }
+
+            // Return validation result to prevent/allow submission
+            return isValid;
+        }
+
+        // Prevent form submission if validation fails
+        document.getElementById("contactForm").addEventListener("submit", function (event) {
+            if (!validateForm()) {
+                event.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
