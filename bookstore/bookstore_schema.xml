@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Defines validation rules for the bookstore catalog structure -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <!-- Serves as the main container that organizes all book records -->
+    <xs:element name="catalog">
+        <xs:complexType>
+            <xs:sequence>
+
+                <!-- Allows the catalog to store multiple book records -->
+                <xs:element name="book" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+
+                            <!-- Stores the book title so users can identify each book -->
+                            <xs:element name="title">
+                                <!-- Allows the title element to store both the book title text and the publicationYear (sub-element) -->
+                                <xs:complexType mixed="true">
+
+                                    <xs:sequence>
+
+                                        <!-- Records the publication year for historical and catalog information -->
+                                        <xs:element name="publicationYear" type="xs:integer"/>
+
+                                    </xs:sequence>
+
+                                </xs:complexType>
+                            </xs:element>
+
+                            <!-- Groups author details together for organized author information -->
+                            <xs:element name="author">
+                                <xs:complexType>
+                                    <xs:sequence>
+
+                                        <!-- Stores the author's first name -->
+                                        <xs:element name="firstName" type="xs:string"/>
+
+                                        <!-- Stores the author's last name -->
+                                        <xs:element name="lastName" type="xs:string"/>
+
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+
+                        </xs:sequence>
+
+                        <!-- Provides a unique identifier for each book -->
+                        <xs:attribute name="id" type="xs:string" use="required"/>
+
+                        <!-- Indicates whether a book is currently available -->
+                        <xs:attribute name="available" type="xs:boolean" use="required"/>
+
+                    </xs:complexType>
+                </xs:element>
+
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>
+

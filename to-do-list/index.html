@@ -1,0 +1,281 @@
+<!-- Dynamic to-do list application that uses JavaScript event handling and DOM manipulation to manage tasks interactively -->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>To Do List</title>
+    <style>
+
+        /* Reset default browser spacing to create a consistent layout foundation */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Apply a clean background and readable font for better user experience */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 40px;
+        }
+
+        /* Main application container design as a centered card layout */
+        .todo-container {
+            max-width: 600px;
+            margin: auto;
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Add spacing and improve heading visibility */
+        header h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* Arrange the input field and button in a horizontal layout */
+        .add-task {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* Style the task input area to make typing comfortable and visually clear */
+        #newTask {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+            border: 0.5px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* Highlight the main action button using color and spacing */
+        #addBtn {
+            padding: 10px 15px;
+            border: none;
+            background-color: green;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        /* Remove default bullet styling to create a cleaner task list appearance */
+        #taskList {
+            list-style: none;
+        }
+
+        /* Style each task as a separate visual block for better readability */
+        .task-item {
+            background-color: #f0f0f0;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            transition: 0.2s;
+        }
+
+        /* Provide visual feedback when users interact with tasks */
+        .task-item:hover {
+            background-color: #e8e8e8;
+        }
+
+        /* Add spacing between the checkbox and task text */
+        .task-text {
+            flex: 1;
+            margin-left: 5px;
+        }
+
+        /* Visually distinguish completed tasks from active tasks */
+        .completed {
+            text-decoration: line-through;
+            color: gray;
+            opacity: 0.7;
+        }
+
+        /* Separate actions buttons from the task text for cleaner organization */
+        .task-actions {
+            margin-top: 10px;
+        }
+
+        /* Create consistent button styling for task actions */
+        .task-actions button {
+            margin-left: 5px;
+            margin-right: 5px;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        /* Use color to differentiate edit button from removal actions */
+        .edit-btn {
+        background-color: orange;
+        color: white;
+        }
+
+        .remove-btn {
+        background-color: red;
+        color: white;
+        }
+
+        /* Add smooth visual interaction effects to buttons */
+        button:hover {
+            opacity: 0.6;
+        }
+
+        button {
+            transition: 0.2s;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main container that keeps the to-do list application centered and visually organized  -->
+    <main class="todo-container">
+
+        <!-- Application heading that identifies the purpose of the page -->
+        <header>
+            <h1>To-Do List</h1>
+        </header>
+
+        <!-- Input section where users can enter and submit new tasks dynamically -->
+        <div class="add-task">
+
+            <!-- Text field used for entering new task descriptions -->
+            <input
+                type="text"
+                id="newTask"
+                placeholder="Enter new task"
+            >
+
+            <!-- Main action button responsible for adding tasks into the list -->
+            <button type="button" id="addBtn">
+                Add Task
+            </button>
+        </div>
+
+        <!-- Dynamic task container where task items will be appended using JavaScript -->
+        <div class="task-container">
+            <ul id="taskList">
+
+            </ul>
+        </div>
+    </main>
+
+    <script>
+        // Store frequently used DOM elements once to improve readability and avoid repeated document queries
+        const taskInput = document.querySelector("#newTask");
+        const addButton = document.querySelector("#addBtn");
+        const taskList = document.querySelector("#taskList");
+
+        // Function responsible for creating and displaying a fully interactive task item
+        function addTask() {
+
+            // Remove unnecessary spaces to keep task entries clean and consistent
+            const taskText = taskInput.value.trim();
+
+            // Prevent empty tasks from being added to maintain meaningful task entries
+            if (taskText === ""){
+                return;
+            }
+
+            // Create the main task container that will hold all task-related elements
+            const taskItem = document.createElement("li");
+            taskItem.classList.add("task-item");
+
+            // Create a checkbox that allows users to track task completion status visually
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+
+            // Create a text element to display the task description clearly inside the list
+            const taskSpan = document.createElement("span");
+            taskSpan.classList.add("task-text");
+            taskSpan.textContent = taskText;
+
+            // Create a dedicated container to organize task action buttons neatly
+            const taskActions = document.createElement("div");
+            taskActions.classList.add("task-actions");
+
+            // Create an edit button that allows users to modify existing tasks dynamically
+            const editButton = document.createElement("button");
+            editButton.textContent = "Edit";
+            editButton.classList.add("edit-btn");
+
+            // Create a remove button that allow users to delete tasks from the list
+            const removeButton = document.createElement("button");
+            removeButton.textContent = "Remove";
+            removeButton.classList.add("remove-btn");
+
+            // Group task action buttons together to improve layout organization
+            taskActions.appendChild(editButton);
+            taskActions.appendChild(removeButton);
+
+            // Assemble all task components into a single interactive task item
+            taskItem.appendChild(checkbox);
+            taskItem.appendChild(taskSpan);
+            taskItem.appendChild(taskActions);
+
+            // Append the completed task item into the dynamic task list
+            taskList.appendChild(taskItem);
+
+            // Clear the input field after adding a task to improve usability for consecutive entries
+            taskInput.value = "";
+        }
+
+        // Allow users to add tasks by clicking the main action button
+        addButton.addEventListener("click", addTask);
+
+        // Improve accessibility and user experience by supporting Enter key submission
+        taskInput.addEventListener("keydown", function (event) {
+
+            if (event.key === "Enter") {
+                addTask();
+            }
+        });
+
+        // Use event delegation to efficiently manage interactions for dynamically created task elements
+        taskList.addEventListener("click", function (event) {
+
+            // Store the clicked element to determine which action the user selected
+            const clickedElement = event.target;
+
+            // identify the parent task item associated with the clicked element
+            const taskItem = clickedElement.closest(".task-item");
+
+            // Remove the selected task dynamically form the DOM when the remove button is clicked
+            if (clickedElement.classList.contains("remove-btn")) {
+                taskItem.remove();
+            }
+
+            // Allow users to update the task content without recreating the task item
+            if (clickedElement.classList.contains("edit-btn")) {
+
+                // Retrieve the current task text to display it inside the edit dialog box
+                const taskText = taskItem.querySelector(".task-text");
+
+                // Open a dialog box that allow users to edit the existing text content
+                const updatedTask = prompt (
+                    "Edit task:",
+                    taskText.textContent
+                );
+
+                // Prevent empty updates and preserve the current task if the dialog is cancelled
+                if (updatedTask !== null && updatedTask.trim() !== "") {
+                    taskText.textContent = updatedTask;
+                }
+            }
+
+            // Toggle a visual completion state so users can track finished tasks easily
+            if (clickedElement.type === "checkbox") {
+                const taskText = taskItem.querySelector(".task-text");
+
+                taskText.classList.toggle("completed");
+            }
+        });
+    </script>
+</body>
+</html>

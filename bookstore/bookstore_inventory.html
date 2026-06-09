@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Ensures proper display and scaling on different screen sizes -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Bookstore Inventory</title>
+
+    <script>
+
+        /* Stores the bookstore inventory data in JSON formate so the web page can organize and display book information */
+        let bookstore = {
+
+            /* Groups all book records into one array to allow multiple books to be managed efficiently */
+           "books":[
+
+             {
+                /* Identifies the book by its title */
+                "title":"The Great Gatsby",
+
+                /* Keeps author information together as a single object */
+                "author":{
+                  "firstName":"F. Scott",
+                  "lastName":"Fitzgerald"
+                },
+
+                /* Records the year the book was published */
+                "publicationYear":1925,
+
+                /* Stores additional book details that support catalog organization */
+                "details":{
+                  "publisher":"Charles Scribner's Sons",
+                  "pageCount":218
+                },
+
+                /* Indicates whether the book is currently available */
+                "available":true,
+             },
+
+             {
+                "title":"To Kill a Mockingbird",
+
+                "author":{
+                   "firstName":"Harper",
+                   "lastName":"Lee"
+                },
+
+                "publicationYear":1960,
+
+                "details":{
+                   "publisher":"J.B. Lippincott & Co",
+                   "pageCount":281
+                },
+
+                "available":true
+             },
+
+             {
+                "title":"1984",
+
+                "author": {
+                   "firstName":"George",
+                   "lastName":"Orwell"
+                },
+
+                "publicationYear":1949,
+
+                "details":{
+                   "publisher":"Secker & Warburg",
+                   "pageCount":328
+                },
+
+                "available":false
+             }
+           ]
+        };
+    </script>
+</head>
+<body>
+
+    <h2>Bookstore Inventory</h2>
+
+    <!-- Provides a section where the inventory information will appear -->
+    <div id="inventory">
+
+        <!-- Serves as the container for dynamically generated book records-->
+        <ul id="bookList"></ul>
+    </div>
+
+    <script>
+        /* Targets the book list container so new items can be added automatically */
+        const bookList = document.getElementById("bookList");
+
+        /* Processes each book record individually so the full inventory can be displayed without manually creating entries */
+        for(let i = 0; i < bookstore.books.length; i++){
+
+            /* Creates a list item for each book to maintain a structured inventory layout */
+            let bookItem = document.createElement("li");
+
+            /* Builds a readable display formate that combines book information into a user-friendly layout */
+            bookItem.innerHTML = `
+                <strong>${bookstore.books[i].title}</strong><br>
+                Author: ${bookstore.books[i].author.firstName}
+                ${bookstore.books[i].author.lastName}<br>
+
+                Publication Year:
+                ${bookstore.books[i].publicationYear}<br>
+
+                Publisher:
+                ${bookstore.books[i].details.publisher}<br>
+
+                Page Count:
+                ${bookstore.books[i].details.pageCount}<br>
+
+                Available:
+                ${bookstore.books[i].available ? "Yes" : "No"}<br>
+            `;
+
+            /* Adds the completed book record to the inventory list so it becomes visible on the webpage */
+            bookList.appendChild(bookItem);
+        }
+    </script>
+</body>
+</html>

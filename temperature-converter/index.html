@@ -1,0 +1,202 @@
+<!-- Temperature converter web page that allows users to convert between Celsius and Fahrenheit with input validation -->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Temperature Converter</title>
+    <style>
+        /* Center the application on the page and apply a clean background */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* Mian container that holds all components in a card-like layout */
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 400px;
+        }
+
+        /* Space below the title for better visual separation */
+        h2 {
+            margin-bottom: 15px;
+        }
+
+        /* Style input field and dropdown to appear as full-width stacked elements */
+        input, select {
+            display: block;
+            width: 100%;
+            margin: 20px 0;
+            padding: 10px;
+            box-sizing: border-box;
+            font-size: 16px;
+            border: 0.5px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* Base button styling for consistent appearance */
+        button {
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        /* Group buttons in a row with equal width */
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .button-group button {
+            flex: 1;
+        }
+
+        /* Convert button styled to match the main action in the UI */
+        #convertBtn {
+            background-color: #0080ff;
+            color: white;
+        }
+
+        /* Clear button styled as a secondary action */
+        #clearBtn {
+            background-color: #ADADAD;
+            color: white;
+        }
+
+        /* Slight hover effect to improve user interaction feedback */
+        button:hover {
+            opacity: 0.8;
+        }
+
+        /* Styling for displaying conversion result clearly */
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        /* Error messages displayed in red to indicate invalid input */
+        #error {
+            color: red;
+            font-size: 0.85em;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Main container holding the temperature conversion interface -->
+    <div class="container">
+        <h2>Temperature Converter</h2>
+
+        <!-- Input field where the user enters temperature value -->
+        <input type="text" id="temperature" placeholder="Enter temperature">
+
+        <!-- Dropdown menu to select conversion type -->
+        <select id="unit">
+            <option value="" disabled selected>Select conversion type</option>
+            <option value="cToF">Celsius to Fahrenheit</option>
+            <option value="fToC">Fahrenheit to Celsius</option>
+        </select>
+
+        <!-- Button group for conversion and clearing inputs -->
+        <div class="button-group">
+            <button id="convertBtn">Convert</button>
+            <button id="clearBtn">Clear</button>
+        </div>
+
+        <!-- Area to display the conversion result -->
+        <p id="result"></p>
+
+        <!-- Area to display error messages -->
+        <p id="error"></p>
+    </div>
+
+    <script>
+        // Retrieve references to DOM elements once to avoid repeat lookups and improve performance
+        const input = document.getElementById("temperature");
+        const unit = document.getElementById("unit");
+        const result = document.getElementById("result");
+        const error = document.getElementById("error");
+        const convertBtn = document.getElementById("convertBtn");
+        const clearBtn = document.getElementById("clearBtn");
+
+        // Function responsible for validating input and performing temperature conversion
+        function convertTemperature() {
+
+            // Clear previous messages to ensure only current results or errors are shown
+            result.textContent = "";
+            error.textContent = "";
+
+            // Trim input to remove accidental spaces that could cause incorrect validation
+            const rawValue = input.value.trim();
+
+            // Convert the cleaned input into a numeric value for calculation
+            const value = Number(rawValue);
+
+            // Get the selected conversion type from the dropdown
+            const selectedUnit = unit.value;
+
+            // Validate that the user has entered a value
+            if (rawValue === "") {
+                error.textContent = "Input cannot be empty.";
+                return; // Stop execution to prevent invalid calculation
+            }
+
+            // Validate that the input is a valid number
+            if (isNaN(value)) {
+                error.textContent = "Please enter a valid number.";
+                return; // Prevent incorrect mathematical operations
+            }
+
+            // Ensure the user selects a conversion type before proceeding
+            if (selectedUnit === "") {
+                error.textContent = "Please select a conversion type.";
+                return;
+            }
+
+            let resultValue;
+
+            // Perform Celsius to Fahrenheit conversion using the standard formula
+            if (selectedUnit === "cToF") {
+                resultValue = (value * 9/5) + 32;
+
+                // Display result with formatted output for better readability
+                result.textContent = `${value.toFixed(2)} °C is ${resultValue.toFixed(2)} °F`;
+            }
+            // Perform Fahrenheit to Celsius conversion using the standard formula
+            else if (selectedUnit === "fToC") {
+                resultValue = (value - 32) * 5/9;
+
+                // Display formatted result
+                result.textContent = `${value.toFixed(2)} °F is ${resultValue.toFixed(2)} °C`;
+            }
+        }
+
+        // Function to reset all inputs and outputs, allowing the user to start a new conversion
+        function clearAll() {
+            input.value = "";             // Clear input field
+            result.textContent = "";      // Remove displayed result
+            error.textContent = "";       // Remove error messages
+            unit.selectedIndex = 0;       // Reset dropdown to placeholder
+        }
+
+        // Attach event listeners to handle user interactions dynamically
+        convertBtn.addEventListener("click", convertTemperature);
+        clearBtn.addEventListener("click", clearAll);
+    </script>
+</body>
+</html>
